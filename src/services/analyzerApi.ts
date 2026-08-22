@@ -2,9 +2,7 @@ import type { AnalysisResult } from '../types/analysis';
 import { extractTextFromDocument } from '../utils/documentParser';
 import { analyzeWithGemini, getGeminiApiKey } from './geminiService';
 import { analyzeDocumentLocally } from './localAnalyzer';
-import { mockAnalysisResult, mockAnalysisResultNoJD } from '../data/mockData';
 
-const MOCK_MODE = import.meta.env.VITE_USE_MOCK_API === 'true';
 const WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || '';
 
 /**
@@ -51,29 +49,12 @@ export function normalizeAnalysisResponse(raw: Record<string, unknown>): Analysi
 }
 
 /**
- * Simulates staged analysis delay for mock mode demo.
- */
-async function simulateMockAnalysis(
-  hasJobDescription: boolean,
-  onStageChange: (stageIndex: number) => void
-): Promise<AnalysisResult> {
-  const delays = [600, 800, 1000, 1000, 800, 600];
-
-  for (let i = 0; i < delays.length; i++) {
-    onStageChange(i);
-    await new Promise((resolve) => setTimeout(resolve, delays[i]));
-  }
-
-  return hasJobDescription ? mockAnalysisResult : mockAnalysisResultNoJD;
-}
-
-/**
  * Real Multi-Tier Analysis Pipeline:
  *
  * 1. Extract raw document text (PDF, DOCX, TXT) in the browser
  * 2. Stage-by-stage progression (Extracting → ATS → Keywords → Bullets → Report)
  * 3. Engine Dispatch:
- *    a) Google Gemini API (if API key is present)
+ *    a) Google Gemini AI (if API key is present)
  *    b) n8n Webhook (if WEBHOOK_URL is configured)
  *    c) Built-in Smart Local NLP Analyzer (zero-config dynamic engine)
  */
@@ -83,11 +64,6 @@ export async function analyzeResume(
   onStageChange: (stageIndex: number) => void
 ): Promise<AnalysisResult> {
   const hasJD = jobDescription.trim().length > 20;
-
-  // ── Explicit Mock Override (Demo only) ─────────────────────────────────
-  if (MOCK_MODE && !getGeminiApiKey() && !WEBHOOK_URL) {
-    return simulateMockAnalysis(hasJD, onStageChange);
-  }
 
   // ── Stage 0: Uploading ──────────────────────────────────────────────────
   onStageChange(0);
@@ -109,7 +85,7 @@ export async function analyzeResume(
 
   // ── Stage 2 & 3: ATS & Keyword Matching ─────────────────────────────────
   onStageChange(2);
-  await new Promise((resolve) => setTimeout(resolve, 400));
+  await new Promise((resolve) => setTimeout(resolve, 350));
   onStageChange(3);
 
   // ── Mode A: Google Gemini AI ────────────────────────────────────────────
@@ -127,8 +103,7 @@ export async function analyzeResume(
       await new Promise((resolve) => setTimeout(resolve, 300));
       return normalizeAnalysisResponse(geminiResult as unknown as Record<string, unknown>);
     } catch (err) {
-      console.warn('Gemini API call failed, falling back to local NLP engine:', err);
-      // Fallback to local engine smoothly if Gemini call fails
+      console.warn('Gemini API call failed, falling back to dynamic local NLP engine:', err);
     }
   }
 
@@ -154,13 +129,13 @@ export async function analyzeResume(
         return normalizeAnalysisResponse(raw);
       }
     } catch (err) {
-      console.warn('Webhook failed, falling back to local NLP engine:', err);
+      console.warn('Webhook failed, falling back to dynamic local NLP engine:', err);
     }
   }
 
   // ── Mode C: Built-in Smart Local NLP & ATS Analyzer ─────────────────────
   onStageChange(4); // Reviewing bullet points
-  await new Promise((resolve) => setTimeout(resolve, 600));
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
   const localResult = analyzeDocumentLocally(
     extractedDoc,
@@ -170,7 +145,7 @@ export async function analyzeResume(
   );
 
   onStageChange(5); // Preparing report
-  await new Promise((resolve) => setTimeout(resolve, 400));
+  await new Promise((resolve) => setTimeout(resolve, 350));
 
   return localResult;
 }
