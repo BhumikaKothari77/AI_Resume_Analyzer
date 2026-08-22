@@ -22,7 +22,7 @@ export default function ResultsPage({ result, onReset }: ResultsPageProps) {
   const REPORT_CONTAINER_ID = 'resume-diagnostic-report';
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50/70 via-rose-50/20 to-white flex flex-col">
       {/* Navigation Header */}
       <Header onHowScoringWorks={() => setHowScoringOpen(true)} />
 
@@ -36,7 +36,7 @@ export default function ResultsPage({ result, onReset }: ResultsPageProps) {
         {/* Printable/Exportable Diagnostic Report Section */}
         <div
           id={REPORT_CONTAINER_ID}
-          className="bg-white border border-gray-200/80 rounded-3xl p-6 sm:p-10 shadow-xl shadow-gray-100/80 space-y-8"
+          className="bg-white/95 backdrop-blur-sm border border-pink-100/90 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-pink-500/5 space-y-8"
         >
           {/* Results Header */}
           <ResultsHeader metadata={result.metadata} onReset={onReset} />
@@ -86,7 +86,7 @@ export default function ResultsPage({ result, onReset }: ResultsPageProps) {
         </div>
 
         {/* Bottom CTA / Actions */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-white border border-gray-100 rounded-2xl shadow-sm">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-white border border-pink-100 rounded-2xl shadow-sm">
           <div>
             <h3 className="text-sm font-bold text-gray-900">Ready to test an updated resume?</h3>
             <p className="text-xs text-gray-500 mt-0.5">
@@ -96,7 +96,7 @@ export default function ResultsPage({ result, onReset }: ResultsPageProps) {
           <button
             type="button"
             onClick={onReset}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 transition-all shadow-sm"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white transition-all shadow-md shadow-pink-500/20"
           >
             Analyze Another Resume
           </button>
@@ -104,7 +104,7 @@ export default function ResultsPage({ result, onReset }: ResultsPageProps) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-6 text-center text-xs text-gray-400 bg-white mt-auto">
+      <footer className="border-t border-pink-100 py-6 text-center text-xs text-gray-400 bg-white/80 mt-auto">
         <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>© {new Date().getFullYear()} ResumeAI — Recruiter & ATS Intelligence</span>
           <span>Professional Resume Diagnostic Report</span>

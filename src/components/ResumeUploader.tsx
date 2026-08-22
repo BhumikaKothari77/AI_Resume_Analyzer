@@ -96,10 +96,10 @@ export default function ResumeUploader({
             transition-all duration-200 ease-out
             ${
               isDragOver
-                ? 'border-indigo-400 bg-indigo-50/60 scale-[1.01]'
+                ? 'border-pink-500 bg-pink-100/60 scale-[1.01] shadow-lg shadow-pink-500/10'
                 : fileError
                 ? 'border-red-300 bg-red-50/30 hover:border-red-400'
-                : 'border-gray-200 bg-gray-50/50 hover:border-indigo-300 hover:bg-indigo-50/30'
+                : 'border-pink-200/80 bg-pink-50/30 hover:border-pink-400 hover:bg-pink-50/60 shadow-xs'
             }
           `}
           role="button"
@@ -115,31 +115,31 @@ export default function ResumeUploader({
           <div
             className={`
               w-14 h-14 rounded-2xl flex items-center justify-center transition-colors duration-200
-              ${isDragOver ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-400'}
+              ${isDragOver ? 'bg-pink-200 text-pink-700' : 'bg-pink-100/70 text-pink-600'}
             `}
           >
             <Upload className="w-6 h-6" />
           </div>
 
           <div className="text-center">
-            <p className="text-base font-semibold text-gray-700">
-              {isDragOver ? 'Drop your resume here' : 'Drop your resume here'}
+            <p className="text-base font-semibold text-gray-800">
+              {isDragOver ? 'Drop your resume right here' : 'Drop your resume here'}
             </p>
-            <p className="mt-1.5 text-sm text-gray-400">
+            <p className="mt-1.5 text-sm text-gray-500">
               PDF, DOCX, or TXT • Maximum 5 MB
             </p>
           </div>
 
-          <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-pink-700 bg-white border border-pink-200 hover:bg-pink-50 hover:border-pink-300 rounded-xl transition-all shadow-xs">
             Browse files
           </span>
         </label>
       ) : (
         /* ── Selected File Card ──────────────────────────────────── */
-        <div className="flex items-center gap-4 p-5 bg-white border border-gray-200 rounded-2xl shadow-sm animate-fade-in">
+        <div className="flex items-center gap-4 p-5 bg-white border border-pink-200/80 rounded-2xl shadow-sm animate-fade-in">
           {/* File icon */}
-          <div className="flex-shrink-0 w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center">
-            <FileText className="w-6 h-6 text-indigo-600" />
+          <div className="flex-shrink-0 w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center border border-pink-100">
+            <FileText className="w-6 h-6 text-pink-600" />
           </div>
 
           {/* File info */}
@@ -153,8 +153,8 @@ export default function ResumeUploader({
           </div>
 
           {/* Ready badge */}
-          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium">
-            <FileCheck className="w-3.5 h-3.5" />
+          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-pink-50 border border-pink-200/60 text-pink-700 rounded-full text-xs font-medium">
+            <FileCheck className="w-3.5 h-3.5 text-pink-600" />
             Ready
           </div>
 

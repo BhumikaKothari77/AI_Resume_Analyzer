@@ -26,12 +26,12 @@ export default function ScoreCard({ score, verdict }: ScoreCardProps) {
     requestAnimationFrame(animate);
   }, [score]);
 
-  // Color based on score
+  // Color based on score with pink/rose theme
   const getScoreColor = (s: number) => {
-    if (s >= 90) return { stroke: '#10b981', bg: 'from-emerald-50 to-emerald-100/50', text: 'text-emerald-700' };
-    if (s >= 75) return { stroke: '#6366f1', bg: 'from-indigo-50 to-violet-100/50', text: 'text-indigo-700' };
-    if (s >= 60) return { stroke: '#f59e0b', bg: 'from-amber-50 to-amber-100/50', text: 'text-amber-700' };
-    return { stroke: '#ef4444', bg: 'from-red-50 to-red-100/50', text: 'text-red-700' };
+    if (s >= 85) return { stroke: '#f43f5e', bg: 'from-rose-50 via-pink-50 to-rose-100/60', text: 'text-rose-700' };
+    if (s >= 70) return { stroke: '#ec4899', bg: 'from-pink-50 via-rose-50/60 to-pink-100/50', text: 'text-pink-700' };
+    if (s >= 55) return { stroke: '#f59e0b', bg: 'from-amber-50 to-orange-100/50', text: 'text-amber-700' };
+    return { stroke: '#e11d48', bg: 'from-rose-50 to-red-100/50', text: 'text-rose-800' };
   };
 
   const colors = getScoreColor(score);
@@ -39,7 +39,7 @@ export default function ScoreCard({ score, verdict }: ScoreCardProps) {
   const strokeDashoffset = circumference - (animatedScore / 100) * circumference;
 
   return (
-    <div className={`bg-gradient-to-br ${colors.bg} rounded-2xl p-6 sm:p-8 border border-white/60`}>
+    <div className={`bg-gradient-to-br ${colors.bg} rounded-3xl p-6 sm:p-8 border border-pink-100 shadow-sm`}>
       <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
         {/* Circular Progress */}
         <div className="relative flex-shrink-0">
@@ -50,9 +50,9 @@ export default function ScoreCard({ score, verdict }: ScoreCardProps) {
               cy="60"
               r="54"
               fill="none"
-              stroke="#e5e7eb"
-              strokeWidth="8"
-              opacity="0.3"
+              stroke="#fce7f3"
+              strokeWidth="9"
+              opacity="0.8"
             />
             {/* Progress circle */}
             <circle
@@ -61,7 +61,7 @@ export default function ScoreCard({ score, verdict }: ScoreCardProps) {
               r="54"
               fill="none"
               stroke={colors.stroke}
-              strokeWidth="8"
+              strokeWidth="9"
               strokeLinecap="round"
               strokeDasharray={circumference}
               strokeDashoffset={strokeDashoffset}
@@ -72,14 +72,14 @@ export default function ScoreCard({ score, verdict }: ScoreCardProps) {
             <span className={`text-4xl font-bold tabular-nums ${colors.text}`}>
               {animatedScore}
             </span>
-            <span className="text-xs text-gray-400 font-medium mt-0.5">/ 100</span>
+            <span className="text-xs text-pink-400 font-medium mt-0.5">/ 100</span>
           </div>
         </div>
 
         {/* Score info */}
         <div className="text-center sm:text-left">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">
-            Overall Resume Score
+          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+            Overall ATS Readiness Score
           </h3>
           <p className={`mt-1.5 text-lg sm:text-xl font-semibold ${colors.text}`}>
             {verdict}

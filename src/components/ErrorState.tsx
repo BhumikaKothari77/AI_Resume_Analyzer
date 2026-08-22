@@ -23,8 +23,8 @@ export default function ErrorState({ error, onRetry, onReset }: ErrorStateProps)
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-lg shadow-gray-100/50">
-        <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-600 mx-auto flex items-center justify-center mb-6">
+      <div className="max-w-md w-full bg-white border border-pink-100 rounded-3xl p-8 text-center shadow-xl shadow-pink-500/5">
+        <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-600 mx-auto flex items-center justify-center mb-6 border border-rose-100">
           {isNetwork ? (
             <WifiOff className="w-8 h-8" />
           ) : isCorrupt ? (
@@ -41,7 +41,7 @@ export default function ErrorState({ error, onRetry, onReset }: ErrorStateProps)
           <button
             type="button"
             onClick={onRetry}
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 transition-all shadow-sm shadow-indigo-100"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 text-white hover:from-pink-600 hover:to-fuchsia-700 active:bg-pink-800 transition-all shadow-md shadow-pink-500/20"
           >
             <RefreshCw className="w-4 h-4" />
             Try Again
@@ -49,7 +49,7 @@ export default function ErrorState({ error, onRetry, onReset }: ErrorStateProps)
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-medium bg-pink-50 text-pink-700 hover:bg-pink-100 transition-all border border-pink-200/60"
           >
             Upload Different File
           </button>

@@ -38,9 +38,9 @@ export default function ExportActions({ result, containerId }: ExportActionsProp
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gray-50/80 border border-gray-200/80 rounded-2xl">
-      <div className="flex items-center gap-2 text-xs text-gray-500 font-medium">
-        <Share2 className="w-4 h-4 text-indigo-600" />
+    <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-pink-50/40 border border-pink-100 rounded-2xl">
+      <div className="flex items-center gap-2 text-xs text-gray-600 font-medium">
+        <Share2 className="w-4 h-4 text-pink-600" />
         <span>Share & Save this diagnostic breakdown</span>
       </div>
 
@@ -49,13 +49,13 @@ export default function ExportActions({ result, containerId }: ExportActionsProp
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-white border border-pink-200 text-gray-700 hover:bg-pink-50 hover:text-pink-700 transition-all shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500"
           aria-label="Copy entire analysis as text"
         >
           {copied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="text-emerald-700">Copied to clipboard!</span>
+              <Check className="w-3.5 h-3.5 text-pink-600" />
+              <span className="text-pink-700">Copied to clipboard!</span>
             </>
           ) : (
             <>
@@ -70,7 +70,7 @@ export default function ExportActions({ result, containerId }: ExportActionsProp
           type="button"
           onClick={handleExportPDF}
           disabled={exporting}
-          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 disabled:opacity-50 transition-all shadow-2xs shadow-indigo-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 text-white hover:from-pink-600 hover:to-fuchsia-700 disabled:opacity-50 transition-all shadow-md shadow-pink-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500"
           aria-label="Export report to PDF"
         >
           {exporting ? (
@@ -88,7 +88,7 @@ export default function ExportActions({ result, containerId }: ExportActionsProp
       </div>
 
       {errorMsg && (
-        <div className="w-full text-xs text-red-600 text-right mt-1">
+        <div className="w-full text-xs text-rose-600 text-right mt-1">
           {errorMsg}
         </div>
       )}

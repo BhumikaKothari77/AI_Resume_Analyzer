@@ -31,7 +31,7 @@ export default function UploadPage({
   const [howScoringOpen, setHowScoringOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50/70 via-rose-50/20 to-white flex flex-col">
       {/* Navigation Header */}
       <Header onHowScoringWorks={() => setHowScoringOpen(true)} />
 
@@ -41,7 +41,7 @@ export default function UploadPage({
         <HeroSection />
 
         {/* Upload & JD Form Card */}
-        <div className="bg-white border border-gray-200/80 rounded-3xl p-6 sm:p-10 shadow-xl shadow-gray-100/80">
+        <div className="bg-white/90 backdrop-blur-sm border border-pink-100 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-pink-500/5">
           <ResumeUploader
             file={file}
             fileError={fileError}
@@ -62,9 +62,9 @@ export default function UploadPage({
         </div>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="mt-20 pt-10 border-t border-gray-200/60">
+        <section id="how-it-works" className="mt-20 pt-10 border-t border-pink-100">
           <div className="text-center mb-12">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+            <span className="px-3.5 py-1 rounded-full text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-200/70">
               Simple 3-Step Process
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-3">
@@ -76,28 +76,28 @@ export default function UploadPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm mb-4">
+            <div className="p-6 rounded-2xl bg-white border border-pink-100 shadow-sm hover:shadow-md hover:border-pink-200 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 border border-pink-100 flex items-center justify-center font-bold text-sm mb-4">
                 01
               </div>
               <h3 className="text-base font-bold text-gray-900 mb-2">Upload Resume</h3>
               <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Provide your standard PDF or DOCX file. Our engine parses structural formatting, font styles, columns, and section headers.
+                Provide your standard PDF, DOCX, or TXT file. Text is parsed instantly in your browser with zero data retention.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center font-bold text-sm mb-4">
+            <div className="p-6 rounded-2xl bg-white border border-pink-100 shadow-sm hover:shadow-md hover:border-pink-200 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center font-bold text-sm mb-4">
                 02
               </div>
               <h3 className="text-base font-bold text-gray-900 mb-2">Target Role (Optional)</h3>
               <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Paste the job description of your dream role to unlock deep keyword gap analysis, skill matching, and tailored positioning insights.
+                Paste the job description to unlock deep keyword gap analysis, skill matching, and tailored positioning insights.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm mb-4">
+            <div className="p-6 rounded-2xl bg-white border border-pink-100 shadow-sm hover:shadow-md hover:border-pink-200 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-fuchsia-50 text-fuchsia-600 border border-fuchsia-100 flex items-center justify-center font-bold text-sm mb-4">
                 03
               </div>
               <h3 className="text-base font-bold text-gray-900 mb-2">Get Actionable Report</h3>
@@ -110,11 +110,11 @@ export default function UploadPage({
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-6 text-center text-xs text-gray-400 bg-white">
+      <footer className="border-t border-pink-100 py-6 text-center text-xs text-gray-400 bg-white/80">
         <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>© {new Date().getFullYear()} ResumeAI — Recruiter & ATS Intelligence</span>
-          <span className="flex items-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
+          <span className="flex items-center gap-1 text-pink-700">
+            <ShieldCheck className="w-3.5 h-3.5 text-pink-500" />
             Zero permanent retention of parsed documents
           </span>
         </div>

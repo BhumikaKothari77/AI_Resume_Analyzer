@@ -18,13 +18,13 @@ export default function AnalyzeButton({
         disabled={disabled || loading}
         className={`
           group relative flex items-center justify-center gap-2.5
-          px-8 py-3.5 text-base font-semibold rounded-xl
-          transition-all duration-200 ease-out
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2
+          px-8 py-3.5 text-base font-semibold rounded-2xl
+          transition-all duration-200 ease-out cursor-pointer
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2
           ${
             disabled || loading
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md'
+              : 'bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 text-white shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/35 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md'
           }
         `}
         aria-label={loading ? 'Analyzing resume' : 'Analyze resume'}

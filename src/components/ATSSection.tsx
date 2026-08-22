@@ -10,8 +10,8 @@ function getSeverityBadge(severity: Issue['severity']) {
   switch (severity) {
     case 'critical':
       return {
-        bg: 'bg-red-50 text-red-700 border-red-200',
-        icon: <ShieldAlert className="w-4 h-4 text-red-600" />,
+        bg: 'bg-rose-50 text-rose-700 border-rose-200',
+        icon: <ShieldAlert className="w-4 h-4 text-rose-600" />,
         label: 'Critical Issue',
       };
     case 'warning':
@@ -23,8 +23,8 @@ function getSeverityBadge(severity: Issue['severity']) {
     case 'info':
     default:
       return {
-        bg: 'bg-blue-50 text-blue-700 border-blue-200',
-        icon: <Info className="w-4 h-4 text-blue-600" />,
+        bg: 'bg-pink-50 text-pink-700 border-pink-200',
+        icon: <Info className="w-4 h-4 text-pink-600" />,
         label: 'Minor Suggestion',
       };
   }
@@ -34,16 +34,16 @@ export default function ATSSection({ issues }: ATSSectionProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+    <div className="bg-white border border-pink-100 rounded-2xl overflow-hidden shadow-xs">
       {/* Accordion Header */}
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50/75 transition-colors text-left"
+        className="w-full px-6 py-4 flex items-center justify-between hover:bg-pink-50/30 transition-colors text-left"
         aria-expanded={isExpanded}
       >
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+          <div className="w-8 h-8 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600">
             <ShieldAlert className="w-4 h-4" />
           </div>
           <div>
@@ -55,17 +55,17 @@ export default function ATSSection({ issues }: ATSSectionProps) {
             </p>
           </div>
         </div>
-        <div className="p-1 rounded-lg text-gray-400 hover:text-gray-600">
+        <div className="p-1 rounded-lg text-gray-400 hover:text-pink-600">
           {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
         </div>
       </button>
 
       {/* Accordion Content */}
       {isExpanded && (
-        <div className="px-6 pb-6 pt-2 border-t border-gray-50">
+        <div className="px-6 pb-6 pt-2 border-t border-pink-50">
           {issues.length === 0 ? (
             <div className="py-8 text-center flex flex-col items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+              <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <p className="text-sm font-semibold text-gray-800">No major ATS formatting issues detected</p>
@@ -80,12 +80,12 @@ export default function ATSSection({ issues }: ATSSectionProps) {
                 return (
                   <div
                     key={issue.id}
-                    className="p-4 rounded-xl border border-gray-100 bg-gray-50/40 hover:bg-gray-50/80 transition-colors"
+                    className="p-4 rounded-xl border border-pink-100/70 bg-pink-50/20 hover:bg-pink-50/40 transition-colors"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                       <h4 className="text-sm font-semibold text-gray-900">{issue.title}</h4>
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border ${badge.bg}`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badge.bg}`}
                       >
                         {badge.icon}
                         {badge.label}
@@ -94,8 +94,8 @@ export default function ATSSection({ issues }: ATSSectionProps) {
                     <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3">
                       {issue.description}
                     </p>
-                    <div className="p-3 bg-white rounded-lg border border-gray-100 text-xs sm:text-sm text-gray-700">
-                      <span className="font-semibold text-indigo-600 mr-1">Suggested action:</span>
+                    <div className="p-3 bg-white rounded-xl border border-pink-100 text-xs sm:text-sm text-gray-700 shadow-xs">
+                      <span className="font-semibold text-pink-700 mr-1">Suggested action:</span>
                       {issue.suggestion}
                     </div>
                   </div>

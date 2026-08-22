@@ -20,37 +20,37 @@ export default function JobDescriptionInput({
         <div className="flex items-center gap-2">
           <label
             htmlFor="job-description"
-            className="text-sm font-semibold text-gray-700"
+            className="text-sm font-semibold text-gray-800"
           >
             Job Description
           </label>
-          <span className="px-2 py-0.5 text-xs font-medium text-gray-400 bg-gray-100 rounded-full">
+          <span className="px-2 py-0.5 text-xs font-semibold text-pink-700 bg-pink-50 border border-pink-200/60 rounded-full">
             Optional
           </span>
         </div>
         {value.length > 0 && (
           <button
             onClick={() => onChange('')}
-            className="flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-gray-600 transition-colors"
+            className="flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors"
             aria-label="Clear job description"
           >
-            <X className="w-3 h-3" />
+            <X className="w-3.5 h-3.5" />
             Clear
           </button>
         )}
       </div>
 
-      <p className="text-xs text-gray-400 mb-2">
-        Adding a job description improves keyword and skill matching.
+      <p className="text-xs text-gray-500 mb-2">
+        Adding a job description unlocks targeted keyword gap analysis and role match scoring.
       </p>
 
       <div
         className={`
-          relative rounded-xl border transition-all duration-200
+          relative rounded-2xl border transition-all duration-200 bg-white
           ${
             isFocused
-              ? 'border-indigo-300 ring-2 ring-indigo-100'
-              : 'border-gray-200 hover:border-gray-300'
+              ? 'border-pink-400 ring-4 ring-pink-100/70 shadow-sm'
+              : 'border-pink-200/70 hover:border-pink-300'
           }
         `}
       >
@@ -64,10 +64,10 @@ export default function JobDescriptionInput({
           }}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          placeholder="Paste the job description here..."
+          placeholder="Paste the target job description here..."
           rows={5}
           maxLength={MAX_CHARS}
-          className="w-full px-4 py-3 text-sm text-gray-700 bg-transparent rounded-xl resize-none placeholder:text-gray-300 focus:outline-none"
+          className="w-full px-4 py-3.5 text-sm text-gray-800 bg-transparent rounded-2xl resize-none placeholder:text-gray-400 focus:outline-none"
         />
 
         {/* Character count */}
@@ -75,8 +75,8 @@ export default function JobDescriptionInput({
           <span
             className={`text-xs tabular-nums ${
               value.length > MAX_CHARS * 0.9
-                ? 'text-amber-500'
-                : 'text-gray-300'
+                ? 'text-rose-500 font-semibold'
+                : 'text-gray-400'
             }`}
           >
             {value.length.toLocaleString()} / {MAX_CHARS.toLocaleString()}

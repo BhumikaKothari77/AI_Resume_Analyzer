@@ -23,22 +23,22 @@ export default function SectionCompleteness({ sectionCompleteness }: SectionComp
   const allPresent = missing.length === 0;
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+    <div className="bg-white border border-pink-100 rounded-2xl overflow-hidden shadow-xs">
       {/* Accordion Header */}
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50/75 transition-colors text-left"
+        className="w-full px-6 py-4 flex items-center justify-between hover:bg-pink-50/30 transition-colors text-left"
         aria-expanded={isExpanded}
       >
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+          <div className="w-8 h-8 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600">
             <LayoutList className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-base font-bold text-gray-900">Section Completeness</h3>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-200/80">
                 {present.length} of {present.length + missing.length} detected
               </span>
             </div>
@@ -49,17 +49,17 @@ export default function SectionCompleteness({ sectionCompleteness }: SectionComp
             </p>
           </div>
         </div>
-        <div className="p-1 rounded-lg text-gray-400 hover:text-gray-600">
+        <div className="p-1 rounded-lg text-gray-400 hover:text-pink-600">
           {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
         </div>
       </button>
 
       {/* Accordion Content */}
       {isExpanded && (
-        <div className="px-6 pb-6 pt-2 border-t border-gray-50">
+        <div className="px-6 pb-6 pt-2 border-t border-pink-50">
           {allPresent ? (
-            <div className="py-6 text-center flex flex-col items-center justify-center bg-emerald-50/30 rounded-xl p-4 border border-emerald-100/50 mt-2">
-              <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mb-2">
+            <div className="py-6 text-center flex flex-col items-center justify-center bg-pink-50/30 rounded-2xl p-4 border border-pink-100 mt-2">
+              <div className="w-10 h-10 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center mb-2">
                 <CheckCheck className="w-5 h-5" />
               </div>
               <h4 className="text-sm font-semibold text-gray-900">All standard resume sections detected</h4>
@@ -80,7 +80,7 @@ export default function SectionCompleteness({ sectionCompleteness }: SectionComp
                   </div>
                   <div className="space-y-2">
                     {missing.map((sec) => (
-                      <div key={sec} className="bg-white/80 p-2.5 rounded-lg border border-amber-200/40">
+                      <div key={sec} className="bg-white/80 p-2.5 rounded-xl border border-amber-200/40">
                         <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-900">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                           Missing: {sec}
@@ -103,9 +103,9 @@ export default function SectionCompleteness({ sectionCompleteness }: SectionComp
                   {present.map((sec) => (
                     <div
                       key={sec}
-                      className="flex items-center gap-2 p-2.5 rounded-lg border border-gray-100 bg-gray-50/40 text-xs font-medium text-gray-800"
+                      className="flex items-center gap-2 p-2.5 rounded-xl border border-pink-100 bg-pink-50/20 text-xs font-semibold text-gray-800"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-pink-600 flex-shrink-0" />
                       <span>{sec}</span>
                     </div>
                   ))}
