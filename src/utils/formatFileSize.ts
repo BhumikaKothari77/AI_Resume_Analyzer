@@ -26,13 +26,13 @@ export function validateResumeFile(
   file: File
 ): { valid: true } | { valid: false; error: string } {
   const ext = getFileExtension(file.name);
-  const ALLOWED = ['pdf', 'docx'];
+  const ALLOWED = ['pdf', 'docx', 'txt'];
   const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 
   if (!ALLOWED.includes(ext)) {
     return {
       valid: false,
-      error: 'Unsupported file format. Please upload a PDF or DOCX resume.',
+      error: 'Unsupported file format. Please upload a PDF, DOCX, or TXT resume.',
     };
   }
 

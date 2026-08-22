@@ -1,35 +1,16 @@
 import type { AnalysisResult } from '../types/analysis';
+import { extractTextFromDocument } from '../utils/documentParser';
+import { analyzeWithGemini, getGeminiApiKey } from './geminiService';
+import { analyzeDocumentLocally } from './localAnalyzer';
 import { mockAnalysisResult, mockAnalysisResultNoJD } from '../data/mockData';
 
 const MOCK_MODE = import.meta.env.VITE_USE_MOCK_API === 'true';
 const WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || '';
 
 /**
- * Simulates staged analysis delay for mock mode.
- * Calls the onStageChange callback at each stage.
- */
-async function simulateMockAnalysis(
-  hasJobDescription: boolean,
-  onStageChange: (stageIndex: number) => void
-): Promise<AnalysisResult> {
-  const delays = [800, 1200, 1500, 1800, 1400, 1000]; // ms per stage
-
-  for (let i = 0; i < delays.length; i++) {
-    onStageChange(i);
-    await new Promise((resolve) => setTimeout(resolve, delays[i]));
-  }
-
-  return hasJobDescription ? mockAnalysisResult : mockAnalysisResultNoJD;
-}
-
-/**
  * Normalizes a raw API response into the AnalysisResult interface.
- * This is the single transformation layer — if n8n returns a slightly
- * different structure, only this function needs to change.
  */
 export function normalizeAnalysisResponse(raw: Record<string, unknown>): AnalysisResult {
-  // For now, assume the API returns data matching our interface.
-  // Add field mapping / defaults here when integrating with n8n.
   const result = raw as unknown as AnalysisResult;
 
   return {
@@ -70,12 +51,31 @@ export function normalizeAnalysisResponse(raw: Record<string, unknown>): Analysi
 }
 
 /**
- * Sends the resume and optional job description for analysis.
+ * Simulates staged analysis delay for mock mode demo.
+ */
+async function simulateMockAnalysis(
+  hasJobDescription: boolean,
+  onStageChange: (stageIndex: number) => void
+): Promise<AnalysisResult> {
+  const delays = [600, 800, 1000, 1000, 800, 600];
+
+  for (let i = 0; i < delays.length; i++) {
+    onStageChange(i);
+    await new Promise((resolve) => setTimeout(resolve, delays[i]));
+  }
+
+  return hasJobDescription ? mockAnalysisResult : mockAnalysisResultNoJD;
+}
+
+/**
+ * Real Multi-Tier Analysis Pipeline:
  *
- * Architecture:
- *   UI → analyzeResume() → mock response OR n8n webhook
- *                        → normalizeAnalysisResponse()
- *                        → AnalysisResult → React UI
+ * 1. Extract raw document text (PDF, DOCX, TXT) in the browser
+ * 2. Stage-by-stage progression (Extracting → ATS → Keywords → Bullets → Report)
+ * 3. Engine Dispatch:
+ *    a) Google Gemini API (if API key is present)
+ *    b) n8n Webhook (if WEBHOOK_URL is configured)
+ *    c) Built-in Smart Local NLP Analyzer (zero-config dynamic engine)
  */
 export async function analyzeResume(
   file: File,
@@ -84,36 +84,93 @@ export async function analyzeResume(
 ): Promise<AnalysisResult> {
   const hasJD = jobDescription.trim().length > 20;
 
-  // ── Mock Mode ──────────────────────────────────────────────────────────
-  if (MOCK_MODE || !WEBHOOK_URL) {
+  // ── Explicit Mock Override (Demo only) ─────────────────────────────────
+  if (MOCK_MODE && !getGeminiApiKey() && !WEBHOOK_URL) {
     return simulateMockAnalysis(hasJD, onStageChange);
   }
 
-  // ── Real Mode — n8n Webhook ────────────────────────────────────────────
-  onStageChange(0); // "Uploading resume..."
+  // ── Stage 0: Uploading ──────────────────────────────────────────────────
+  onStageChange(0);
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
-  const formData = new FormData();
-  formData.append('resume', file);
-  if (hasJD) {
-    formData.append('jobDescription', jobDescription);
-  }
-
+  // ── Stage 1: Document Parsing / Text Extraction ────────────────────────
+  onStageChange(1);
+  let extractedDoc;
   try {
-    const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Analysis failed with status ${response.status}`);
-    }
-
-    const raw = await response.json();
-    return normalizeAnalysisResponse(raw);
-  } catch (error) {
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error('Unable to connect to the analysis service.');
-    }
-    throw error;
+    extractedDoc = await extractTextFromDocument(file);
+  } catch (err) {
+    console.error('Failed to parse document text:', err);
+    throw new Error(`Unable to read ${file.name}. Please ensure the file is not password-protected.`);
   }
+
+  if (!extractedDoc.text || extractedDoc.text.trim().length < 15) {
+    throw new Error(`No readable text found in ${file.name}. If this is a scanned PDF image, please use a text-based PDF or DOCX file.`);
+  }
+
+  // ── Stage 2 & 3: ATS & Keyword Matching ─────────────────────────────────
+  onStageChange(2);
+  await new Promise((resolve) => setTimeout(resolve, 400));
+  onStageChange(3);
+
+  // ── Mode A: Google Gemini AI ────────────────────────────────────────────
+  const geminiKey = getGeminiApiKey();
+  if (geminiKey) {
+    try {
+      onStageChange(4);
+      const geminiResult = await analyzeWithGemini(
+        extractedDoc.text,
+        jobDescription,
+        file.name,
+        file.size
+      );
+      onStageChange(5);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      return normalizeAnalysisResponse(geminiResult as unknown as Record<string, unknown>);
+    } catch (err) {
+      console.warn('Gemini API call failed, falling back to local NLP engine:', err);
+      // Fallback to local engine smoothly if Gemini call fails
+    }
+  }
+
+  // ── Mode B: n8n Webhook ─────────────────────────────────────────────────
+  if (WEBHOOK_URL) {
+    try {
+      const formData = new FormData();
+      formData.append('resume', file);
+      formData.append('extractedText', extractedDoc.text);
+      if (hasJD) {
+        formData.append('jobDescription', jobDescription);
+      }
+
+      onStageChange(4);
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const raw = await response.json();
+        onStageChange(5);
+        return normalizeAnalysisResponse(raw);
+      }
+    } catch (err) {
+      console.warn('Webhook failed, falling back to local NLP engine:', err);
+    }
+  }
+
+  // ── Mode C: Built-in Smart Local NLP & ATS Analyzer ─────────────────────
+  onStageChange(4); // Reviewing bullet points
+  await new Promise((resolve) => setTimeout(resolve, 600));
+
+  const localResult = analyzeDocumentLocally(
+    extractedDoc,
+    jobDescription,
+    file.name,
+    file.size
+  );
+
+  onStageChange(5); // Preparing report
+  await new Promise((resolve) => setTimeout(resolve, 400));
+
+  return localResult;
 }

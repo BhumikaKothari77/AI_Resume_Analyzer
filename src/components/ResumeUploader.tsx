@@ -76,7 +76,7 @@ export default function ResumeUploader({
       <input
         ref={inputRef}
         type="file"
-        accept=".pdf,.docx"
+        accept=".pdf,.docx,.txt"
         onChange={handleInputChange}
         className="sr-only"
         id="resume-upload"
@@ -126,7 +126,7 @@ export default function ResumeUploader({
               {isDragOver ? 'Drop your resume here' : 'Drop your resume here'}
             </p>
             <p className="mt-1.5 text-sm text-gray-400">
-              PDF or DOCX • Maximum 5 MB
+              PDF, DOCX, or TXT • Maximum 5 MB
             </p>
           </div>
 
